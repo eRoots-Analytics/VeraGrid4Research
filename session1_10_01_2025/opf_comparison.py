@@ -1,7 +1,5 @@
 from matplotlib import pyplot as plt
-import matplotlib
 import GridCalEngine as gce
-matplotlib.use('gtk3agg')
 
 # load a grid (.gridcal, .m (Matpower), .raw (PSS/e) .rawx (PSS/e), .epc (PowerWorld), .dgs (PowerFactory)
 grid = gce.open_file("case89pegase.m")
@@ -22,6 +20,8 @@ fig = plt.figure()
 plt.ion()
 plt.plot(lin_opf_res.Sf.real, label="Linear Pf")
 plt.plot(nl_opf_res.Sf.real, label="NonLinear Pf")
+plt.title("Linear and nonlinear OPF comparison")
+plt.ylabel("MW")
+plt.xlabel("Branch")
+plt.legend()
 plt.savefig("Opf comparison.png")
-plt.show()
-print()

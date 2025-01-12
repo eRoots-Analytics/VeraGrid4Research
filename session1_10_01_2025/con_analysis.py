@@ -13,6 +13,7 @@ res_base = multi_island_pf_nc(nc, options=opt)
 
 m = nc.passive_branch_data.nelm
 con_flows = np.zeros((m, m))
+lodf = np.zeros((m, m))
 
 for k in range(m):
 
@@ -23,13 +24,21 @@ for k in range(m):
 
     res = multi_island_pf_nc(nc, options=opt)
     con_flows[k, :] = res.Sf.real
+    lodf[k, :] = (res_base.Sf.real - res.Sf.real) / (res_base.Sf.real + 1e-20)
 
     # recovering the branch
     nc.passive_branch_data.active[k] = prev_state
 
-df = pd.DataFrame(
+df1 = pd.DataFrame(
     data=con_flows,
     index=nc.passive_branch_data.names,
     columns=nc.passive_branch_data.names
 )
-df.to_csv("Contingencies.csv")
+df1.to_csv("Contingencies.csv")
+
+df2 = pd.DataFrame(
+    data=lodf,
+    index=nc.passive_branch_data.names,
+    columns=nc.passive_branch_data.names
+)
+df2.to_csv("LODF.csv")
