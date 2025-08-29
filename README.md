@@ -1,5 +1,5 @@
 # GridCal4Research
-Codes created during the GridCal for research chats with UPC students.
+Codes created during the VeraGrid for research chats with UPC students.
 
 ## Session 1
 
